@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="results.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Results</h1>
+        <div id="results" class="card">
+            <div class="header">Your Scores</div>
+            <div class="body"></div>
+        </div>
+        <button onclick="retakeQuiz()">Retake Quiz</button>
+        <button onclick="goHome()">Return to Home Page</button>
+    </div>
+
+    <script>
+        // Retrieve results from localStorage
+        const scores = JSON.parse(localStorage.getItem("quizResults"));
+        const totalCorrect = localStorage.getItem("totalCorrect");
+
+        const bodyDiv = document.querySelector(".body");
+
+        // Generate progress bars for each subdomain
+        for (const subdomain in scores) {
+            const scorePercent = (scores[subdomain] / 5) * 100;
+            bodyDiv.innerHTML += `
+                <div class="skill">
+                    <div class="skill-name">${subdomain}</div>
+                    <div class="skill-level">
+                        <div class="skill-percent" style="width: ${scorePercent}%"></div>
+                    </div>
+                    <div class="skill-percent-number">${scorePercent}%</div>
+                </div>
+            `;
+        }
+
+        // Retake quiz function
+        function retakeQuiz() {
+            localStorage.clear();
+            window.location.href = "quiz.html";
+        }
+
+        // Go to home page function
+        function goHome() {
+            window.location.href = "index.html"; // Update the path to your home page
+        }
+    </script>
+</body>
+</html>
